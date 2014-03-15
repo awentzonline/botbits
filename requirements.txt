@@ -1,0 +1,5 @@
+greenlet==0.4.2
+gevent==1.0
+tweepy
+pytumblr
+-e git+https://github.com/awentzonline/geventirc#egg=geventirc
