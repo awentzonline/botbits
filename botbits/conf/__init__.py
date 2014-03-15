@@ -4,7 +4,7 @@ import os
 import default_settings
 
 
-SETTINGS_MODULE_ENV_VAR = "BOTBOLTS_SETTINGS_MODULE"
+SETTINGS_MODULE_ENV_VAR = "BOTBITS_SETTINGS_MODULE"
 
 
 class ModuleSettings(object):
