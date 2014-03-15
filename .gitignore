@@ -11,4 +11,4 @@ share
 *~
 dist
 .vagrant*
-chad/*
+*.egg-info
