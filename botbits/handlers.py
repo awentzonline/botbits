@@ -47,7 +47,7 @@ class SalutationMatcher(MessageMatcher):
         super(SalutationMatcher, self).__init__(*args, **kwargs)
 
     def get_re_pattern(self):
-        return re.compile(".*{}.*".format(self.nick))
+        return re.compile(self.nick)
 
     def on_match(self, match, client, msg, channel, content):
         nick = msg.prefix_parts[0]
