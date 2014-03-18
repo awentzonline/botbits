@@ -1,7 +1,7 @@
 import random
 import re
 
-from geventirc.message import PrivMsg
+from geventirc import message
 
 from .commands import Kick
 
@@ -51,11 +51,36 @@ class SalutationMatcher(MessageMatcher):
 
     def on_match(self, match, client, msg, channel, content):
         nick = msg.prefix_parts[0]
-        client.send_message(PrivMsg(channel, self.get_salutation(nick)))
+        client.send_message(message.PrivMsg(channel, self.get_salutation(nick)))
 
     def get_salutation(self, target_nick):
         salutation = random.choice(self.salutations)
         return salutation.format(target_nick)
+
+
+class OperatorHandler(object):
+
+    commands = ['001']
+
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+
+    def __call__(self, client, msg):
+        client.send_message(message.Command([self.username, self.password], command="OPER"))
+
+
+class ModeHandler(object):
+
+    commands = ['002']
+
+    def __init__(self, target, mode, username):
+        self.target = target
+        self.mode = mode
+        self.username = username
+
+    def __call__(self, client, msg):
+        client.send_message(message.Command([self.target, self.mode, self.username], command="MODE"))
 
 
 class BadWordKicker(MessageHandler):

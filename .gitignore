@@ -12,3 +12,4 @@ share
 dist
 .vagrant*
 *.egg-info
+botconf.yml

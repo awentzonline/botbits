@@ -1,0 +1,22 @@
+---
+bots:
+  - nick: chrisbot
+    host: irc.example.com
+    channels:
+      - "#poop"
+    password: "whoooooo!"
+
+    handlers:
+      botbits.handlers.BadWordKicker:
+        bad_words:
+          - yolo
+          - jezebel
+          - whatever
+          - nodejs
+      botbits.handlers.OperatorHandler:
+        username: chrisbot
+        password: whoooooo
+      botbits.handlers.ModeHandler:
+        target: "#poop"
+        mode: "+o"
+        username: "chrisbot"
