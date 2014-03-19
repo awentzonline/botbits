@@ -72,7 +72,7 @@ class OperatorHandler(object):
 
 class ModeHandler(object):
 
-    commands = ['002']
+    commands = ['381']
 
     def __init__(self, target, mode, username):
         self.target = target

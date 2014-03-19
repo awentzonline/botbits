@@ -36,10 +36,12 @@ class Bot(object):
 
     def add_handlers(self):
         self.irc.add_handler(handlers.print_handler)
-        for handler_path, handler_settings in self.settings.get("handlers", {}).items():
-            class_data = handler_path.split(".")
+        for handler_settings in self.settings.get("handlers", {}):
+            class_data = handler_settings["name"].split(".")
             module_path = ".".join(class_data[:-1])
             class_str = class_data[-1]
+
+            del handler_settings["name"]
 
             handler_module = importlib.import_module(module_path)
 
