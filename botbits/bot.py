@@ -1,4 +1,5 @@
 import importlib
+import inspect
 
 from geventirc import Client, handlers, message
 
@@ -35,7 +36,6 @@ class Bot(object):
             self.irc.add_handler(handlers.JoinHandler(channel))
 
     def add_handlers(self):
-        self.irc.add_handler(handlers.print_handler)
         for handler_settings in self.settings.get("handlers", {}):
             class_data = handler_settings["name"].split(".")
             module_path = ".".join(class_data[:-1])
@@ -45,8 +45,12 @@ class Bot(object):
 
             handler_module = importlib.import_module(module_path)
 
-            handler_cls = getattr(handler_module, class_str)
-            handler = handler_cls(**handler_settings)
+            handler_fn = getattr(handler_module, class_str)
+            if inspect.isclass(handler_fn):
+                handler = handler_fn(**handler_settings)
+            else:
+                handler = handler_fn
+
             self.irc.add_handler(handler)
 
     def webhook(self, name):

@@ -6,6 +6,48 @@ from geventirc import message
 from .commands import Kick
 
 
+class WebhookMessageHandler(object):
+
+    def __init__(self, allowed_ips):
+        self.allowed_ips = allowed_ips
+
+    def webhook(self, request):
+        pass
+
+
+class OperatorHandler(object):
+    """Authenticates a bot as an operator
+
+    This is necessary for settings modes, etc."""
+
+    commands = ['001']
+
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+
+    def __call__(self, client, msg):
+        client.send_message(message.Command([self.username, self.password], command="OPER"))
+
+
+class ModeHandler(object):
+
+    """Sets a mode
+
+    You need to be an operator in order to set modes, so you'll need
+    to use a OperatorHandler as well."""
+
+    commands = ['381']
+
+    def __init__(self, target, mode, username):
+        self.target = target
+        self.mode = mode
+        self.username = username
+
+    def __call__(self, client, msg):
+        client.send_message(message.Command([self.target, self.mode, self.username], command="MODE"))
+
+
 class MessageHandler(object):
     """Makes chat messages simpler to work with?"""
     commands = ["PRIVMSG"]
@@ -56,31 +98,6 @@ class SalutationMatcher(MessageMatcher):
     def get_salutation(self, target_nick):
         salutation = random.choice(self.salutations)
         return salutation.format(target_nick)
-
-
-class OperatorHandler(object):
-
-    commands = ['001']
-
-    def __init__(self, username, password):
-        self.username = username
-        self.password = password
-
-    def __call__(self, client, msg):
-        client.send_message(message.Command([self.username, self.password], command="OPER"))
-
-
-class ModeHandler(object):
-
-    commands = ['381']
-
-    def __init__(self, target, mode, username):
-        self.target = target
-        self.mode = mode
-        self.username = username
-
-    def __call__(self, client, msg):
-        client.send_message(message.Command([self.target, self.mode, self.username], command="MODE"))
 
 
 class BadWordKicker(MessageHandler):
