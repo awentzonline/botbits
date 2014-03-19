@@ -21,7 +21,8 @@ requires = [
     "tweepy",
     "pytumblr",
     "geventirc",
-    "bottle==0.12.5"
+    "bottle==0.12.5",
+    "PyYAML==3.10"
 ],
 dependency_links = [
     "https://github.com/awentzonline/geventirc/tarball/master#egg=geventirc",
