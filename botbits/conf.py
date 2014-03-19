@@ -1,5 +1,6 @@
-import yaml
 import os
+import yaml
+
 
 BOTBITS_CONF = "BOTBITS_CONF"
 
@@ -11,9 +12,8 @@ class LazySettings(object):
 
     def __getitem__(self, name):
         if self._config is None:
-            with open(os.environ.get(BOTBITS_CONF, "botconf.yml"), 'rb') as stream:
+            with open(os.environ.get(BOTBITS_CONF, "botconf.yml"), "rb") as stream:
                 self._config = yaml.load(stream)
-
         return self._config.__getitem__(name)
 
     def get(self, name, default=None):

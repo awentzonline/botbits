@@ -5,11 +5,10 @@ from geventirc import Client, handlers, message
 
 
 class Bot(object):
-
+    """Derive your hateful new robot from this class."""
     def __init__(self, settings):
         self.settings = settings
 
-    """Derive your hateful new robot from this class."""
     def start(self):
         self.nick = self.settings["nick"]
         self.host = self.settings["host"]
